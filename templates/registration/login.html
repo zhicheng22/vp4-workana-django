@@ -1,0 +1,42 @@
+{% extends 'common.html' %}
+{% load crispy_forms_tags %}
+
+{% block common %}
+<section id="login" class="bg-light py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4><i class="fas fa-sign-in-alt"></i>Login</h4>
+          </div>
+          <div class="card-body">
+            {% include 'alerts.html' %}
+            <form action="{% url 'login' %}" method="POST">
+              {% csrf_token %}
+
+              {{ form.username|as_crispy_field }}
+              {{ form.username.errors }}
+
+              {{ form.password|as_crispy_field }}
+              {{ form.password.errors }}
+
+              <div class="form-group form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox"> Remember Me
+                </label>
+              </div>
+
+              <input type="submit" value="Login" class="btn btn-secondary btn-block">
+
+              <div class="form-group" align="center">
+                <a href="{% url 'password_reset' %}">Forgot Username/Password</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock common %}

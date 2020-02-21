@@ -1,0 +1,130 @@
+{% extends 'common_member.html' %}
+
+{% block common_member %}
+<div class="container">
+    <br>
+    <div class="dropdown dropleft float-right">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        MY PAGE
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'personal_information' pk=4 %}">Personal Information</a>
+        <a class="dropdown-item" href="{% url 'my_complaint' %}">My Complaint</a>
+        <a class="dropdown-item" href="{% url 'complaint_form' %}">Complaint Form</a>
+      </div>
+    </div>
+    <br><br><br>
+  <!-- Nav pills -->
+  <ul class="nav nav-pills" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="pill" href="#annoucenment">ANNOUNCEMENT</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="pill" href="#complaint">COMPLAINT</a>
+    </li>
+  </ul>
+</div>
+
+<div class="container">
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="annoucenment" class="container tab-pane active"><br>
+      <h3>ANNOUNCEMENT</h3>
+      <p>Announcement</p>
+
+      <div class="grid">
+        <div class="grid-sizer"></div>
+        <!-- <div class="grid-item"></div> -->
+        <div class="grid-item grid-item--width3 grid-item--height2">
+        <div class="border">IMPORTANT ANNOUNCEMENTS</div>
+        <p>Date posted: Information</p>
+        </div>
+
+        <div class="grid-item grid-item--width2 grid-item--height3">
+        <div class="border">EVENTS</div>
+        <p>Date posted: Information</p>
+        </div>
+
+        <div class="grid-item grid-item--width3 grid-item--height5">
+        <div class="border">GENERAL ANNOUNCEMENTS</div>
+        <p>Date posted: Information</p>
+        </div>
+
+        <div class="grid-item grid-item--width2 grid-item--height4">
+        <div class="border">SCHEDULES</div>
+        <p>Date posted: Information</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="complaint" class="container tab-pane fade"><br>
+      <h3>COMPLAINT</h3>
+      <div class="container mt-3">
+        <input class="form-control" id="myInput" type="text" placeholder="Search..">
+        <br>
+        <table class="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th>DATE</th>
+              <th>TIME</th>
+              <th>CATEGORY</th>
+              <th>TYPE</th>
+              <th>RESOLUTION</th>
+              <th>COMMENTS</th>
+            </tr>
+          </thead>
+          <tbody id="myTable">
+          {% if complaint_list %}
+            {% for simple_data in complaint_list %}
+            <tr>
+              <td>{{ simple_data.created_date }}</td>
+              <td>{{ simple_data.created_time }}</td>
+              <td>{{ simple_data.category }}</td>
+              <td>{{ simple_data.type }}</td>
+              <td>{{ simple_data.resolution }}</td>
+              <td>{{ simple_data.comments }}</td>
+            </tr>
+          {% endfor %}
+          {% endif %}
+          </tbody>
+        </table>
+
+        {% if is_paginated %}
+          <ul class="pagination justify-content-end">
+            {% if page_obj.has_previous %}
+              <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% else %}
+              <li class="page-item disabled"><a class="page-link">Previous</a></li>
+            {% endif %}
+            <li class="page-item disabled"><a class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+            {% if page_obj.has_next %}
+              <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }} active='true' ">Next</a></li>
+            {% else %}
+              <li class="page-item disabled"><a class="page-link">Next</a></li>
+            {% endif %}
+          </ul>
+        {% endif %}
+
+        <p>Note: </p>
+      </div>
+
+      <script>
+      $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#myTable tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+        $('.grid').masonry({
+          itemSelector: '.grid-item',
+          columnWidth: '.grid-sizer',
+          percentPosition: true
+        });
+      });
+      </script>
+    </div>
+  </div>
+</div>
+{% endblock common_member%}

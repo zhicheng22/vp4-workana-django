@@ -1,0 +1,26 @@
+{% extends 'common_member.html' %}
+
+
+{% block common_member%}
+
+<div class="container">
+    <br>
+    <div class="dropdown dropleft float-right">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        MY PAGE
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'personal_information' pk=4 %}">Personal Information</a>
+        <a class="dropdown-item" href="{% url 'my_complaint' %}">My Complaint</a>
+        <a class="dropdown-item" href="{% url 'complaint_form' %}">Complaint Form</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'member' %}">Back to Members Page</a>
+      </div>
+    </div>
+</div>
+<br><br><br>
+
+{% block my_page %}
+{% endblock my_page %}
+
+{% endblock common_member %}

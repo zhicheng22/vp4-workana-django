@@ -1,0 +1,94 @@
+{% extends 'common_my_page.html' %}
+{% block my_page %}
+<div class="container">
+  <div class="container">
+    <div id="" class=""><br>
+      <h3>My Complaint</h3>
+      <div class="container mt-3 .table-responsive-md">
+        <input class="form-control" id="myInput" type="text" placeholder="Search..">
+        <br>
+        <table class="table table-bordered table table-hover">
+          <thead>
+            <tr>
+              <th>CASE NO.</th>
+              <th>DATE</th>
+              <th>TIME</th>
+              <th>SUBJECT</th>
+              <th>EDIT</th>
+              <th>CANCEL</th>
+              <th>SUBMIT</th>
+              <th>RESOLUTION</th>
+              <th>COMMENTS</th>
+            </tr>
+          </thead>
+          <tbody id="myTable">
+          {% if complaint_list %}
+          {% for complaint in complaint_list %}
+            <tr>
+              <td>{{ complaint.id }}</td>
+              <td>{{ complaint.created_date }}</td>
+              <td>{{ complaint.created_time }}</td>
+              <td>{{ complaint.subject }}</td>
+              <td>
+                <a href="{% url 'complaint_detail' complaint.pk %}" class="btn btn-primary">VIEW</a>
+              </td>
+              {% if complaint.is_canceled %}
+                <td>
+                  <button type="button" class="btn btn-success" disabled>CANCEL</button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-success" disabled>SUBMIT</button>
+                </td>
+              {% else %}
+                <td>
+                  <a href="{% url 'canceling' pk=complaint.pk %}"><button type="button" class="btn btn-success">CANCEL</button></a>
+                </td>
+                <td>
+                  <a href="{% url 'generate_pdf' pk=complaint.pk %}"><button type="button" class="btn btn-danger">SUBMIT</button></a>
+                </td>
+              {% endif %}
+              </td>
+              <td>{{ complaint.resolution }}</td>
+              <td>{{ complaint.comments }}</td>
+            </tr>
+          {% endfor %}
+          {% endif %}
+          </tbody>
+        </table>
+        {% if is_paginated %}
+          <ul class="pagination justify-content-end">
+            {% if page_obj.has_previous %}
+              <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% else %}
+              <li class="page-item disabled"><a class="page-link">Previous</a></li>
+            {% endif %}
+            <li class="page-item disabled"><a class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+            {% if page_obj.has_next %}
+              <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a></li>
+            {% else %}
+              <li class="page-item disabled"><a class="page-link">Next</a></li>
+            {% endif %}
+          </ul>
+        {% endif %}
+      </div>
+
+      <script>
+        $("#myInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#myTable tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+
+        $("button[iden='complaint_button']").click(function(){
+          $(this).parent().next().children().children().prop("disabled", true);
+          $(this).prop("disabled", true);
+        });
+      </script>
+    </div>
+    </div>
+  </div>
+</div>
+
+{% endblock my_page %}
+

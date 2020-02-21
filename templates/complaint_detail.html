@@ -1,0 +1,56 @@
+{% extends 'common_my_page.html' %}
+{% load crispy_forms_tags %}
+
+{% block my_page %}
+  <div class="container">
+    <div id="" class=""><br>
+      <h3>Complaint Detail</h3>
+    </div>
+
+    <div class="card-body">
+        {% include 'alerts.html' %}
+        <form>
+          <div class="form-group">
+            <label for="respondent_first_name">Respondent First Name</label>
+            <input type="text" name="respondent_first_name" class="form-control" value="{{ form.respondent_first_name }}" readonly>
+<!--            {{ form.user.first_name }}-->
+          </div>
+          <div class="form-group">
+            <label for="respondent_last_name">Respondent Last Name</label>
+            <input type="text" name="respondent_last_name" class="form-control" value="{{ form.respondent_last_name }}" readonly>
+<!--            {{ form.user.last_name  }}-->
+          </div>
+          <div class="form-group">
+            <label for="respondent_address">Respondent Address </label>
+            <input type="text" name="respondent_address" class="form-control" value="{{ form.respondent_address }}" readonly>
+<!--            {{ form.mobile_number }}-->
+          </div>
+          <div class="form-group">
+            <label for="category">Category</label>
+            <input type="text" name="category" class="form-control" value="{{ form.category }}" readonly>
+<!--            {{ form.house_number }}-->
+          </div>
+          <div class="form-group">
+            <label for="type">Type</label>
+            <input type="text" name="type" class="form-control" value="{{ form.type }}" readonly>
+<!--            {{ form.street_address }}-->
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" name="subject" class="form-control" value="{{ form.subject }}" readonly>
+<!--            {{ form.subdivision }}-->
+          </div>
+          <div class="form-group">
+            <label for="complain">Complain</label>
+              <textarea name="complain" class="form-control" readonly>{{ form.complain }}</textarea>
+<!--            {{ form.city }}-->
+          </div>
+        </form>
+      {% if form.is_canceled %}
+        <button class="btn btn-secondary btn-block" disabled>EDIT</button>
+      {% else %}
+        <a href="{% url 'complaint_update' pk=form.pk %}"><button class="btn btn-secondary btn-block">EDIT</button></a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock my_page %}

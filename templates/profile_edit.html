@@ -1,0 +1,25 @@
+{% extends 'common_my_page.html' %}
+{% load crispy_forms_tags %}
+
+{% block my_page %}
+  <div class="container">
+    <div id="" class=""><br>
+      <h3>Personal Information</h3>
+      <div class="card" style="width:200px">
+          {% if form.logo_cover %} <img src="{{ form.logo_cover.url }}"> {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{% if user.is_authenticated %} {{ user.username }} {% endif %}</h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+        {% include 'alerts.html' %}
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{form|crispy}}
+           <input type="submit" class="btn btn-secondary btn-block" value="SAVE CHANGES">
+        </form>
+    </div>
+  </div>
+{% endblock my_page %}

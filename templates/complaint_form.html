@@ -1,0 +1,67 @@
+{% extends 'common_my_page.html' %}
+{% load crispy_forms_tags %}
+
+{% block my_page %}
+<div class="container">
+  <div class="container">
+    <div id="" class=""><br>
+      <h3>Complaint Form</h3>
+    </div>
+
+    <div class="card-body">
+        {% include 'alerts.html' %}
+        <form action="{% url 'complaint_form' %}" method="POST" id="create_complaint_Form" data-cities-url="{% url 'ajax_load_types' %}">
+          {% csrf_token %}
+          {{form|crispy}}
+
+            <div class="container" align="center">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                CREATE
+              </button>
+              <!-- The Modal -->
+              <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h3 class="modal-title">Please Read</h3>
+                      <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body" align="left">
+                      <h4>Please read carefully</h4>
+                      <p>Once you click on the save button, please go to the 'My Complaint' page to submit your complain to the Admin</p>
+                      <p>Produce a printed copy of the form and proceed to the office if you wish to receive a response from the complained party.</p>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <input type="submit" class="btn btn-danger" value="SAVE">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </form>
+      </div>
+  </div>
+</div>
+
+<script>
+    $("#id_category").change(function () {
+      var url = $("#create_complaint_Form").attr("data-cities-url");
+      var categoryId = $(this).val()
+
+      $.ajax({
+        url: url,
+        data: {
+          'category': categoryId
+        },
+        success: function (data) {
+          $("#id_type").html(data);
+        }
+      });
+
+    });
+  </script>
+
+{% endblock my_page %}

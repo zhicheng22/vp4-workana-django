@@ -1,0 +1,120 @@
+{% extends 'common.html' %}
+{% load crispy_forms_tags %}
+
+{% block common %}
+<section id="register" class="bg-light py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4>
+              <i class="fas fa-user-plus"></i> Register</h4>
+          </div>
+          <div class="card-body">
+              {% include 'alerts.html' %}
+              <form class="needs-validation" novalidate action="{% url 'customer_register' %}" method="POST" >
+                {% csrf_token %}
+
+                  {{ userForm.first_name|as_crispy_field  }}
+                    {{ userForm.first_name.errors }}
+                  {{ userForm.last_name|as_crispy_field  }}
+                    {{ userForm.last_name.errors }}
+                  {{ baseForm.mobile_number|as_crispy_field  }}
+                  {{ baseForm.house_number|as_crispy_field  }}
+                    {{ baseForm.house_number.errors }}
+                  {{ baseForm.street_address|as_crispy_field  }}
+                    {{ baseForm.street_address.errors }}
+                  {{ baseForm.subdivision|as_crispy_field  }}
+                    {{ baseForm.subdivision.errors }}
+                  {{ baseForm.city|as_crispy_field  }}
+                    {{ baseForm.city.errors }}
+                  {{ baseForm.zip_code|as_crispy_field  }}
+                  {{ userForm.username|as_crispy_field }}
+
+                  {{ userForm.email|as_crispy_field }}
+
+                  {{ userForm.password|as_crispy_field }}
+
+                  {{ userForm.password2|as_crispy_field }}
+
+
+
+              <div class="form-group form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" required> Agree with our Terms and Conditions
+                  <div class="valid-feedback"></div>
+                  <div class="invalid-feedback">Check this box to continue.</div>
+                </label>
+              </div>
+              <input type="submit" value="Register" class="btn btn-secondary btn-block">
+
+              <hr>
+
+              <div class="container" align="center">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                  Terms and Conditions
+                </button>
+
+                <!-- The Modal -->
+                <div class="modal" id="myModal">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+
+                      <!-- Modal Header -->
+                      <div class="modal-header">
+                        <h3 class="modal-title">TERMS AND CONDITIONS</h3>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                      </div>
+
+                      <!-- Modal body -->
+                      <div class="modal-body" align="left">
+                        <h4>Please read carefully</h4>
+                        <p>Point 1</p>
+                        <p>Point 2</p>
+                        <p>Point 3</p>
+                      </div>
+
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+  // Disable form submissions if there are invalid fields
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      // Get the forms we want to add validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+  </script>
+
+</section>
+
+{% endblock common %}

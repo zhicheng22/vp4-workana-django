@@ -1,0 +1,34 @@
+{% load qr_code %}
+<div class="container">
+    <div>
+      <h3>Complaint Detail</h3>
+    </div>
+     <div>
+         <h3><strong>Respondent First Name:</strong>{{ form.respondent_first_name }}</h3>
+    </div>
+     <div>
+      <h3><strong>Respondent Last Name:</strong>{{ form.respondent_last_name }}</h3>
+    </div>
+     <div>
+      <h3><strong>Respondent Address:</strong>{{ form.respondent_address }}</h3>
+    </div>
+     <div>
+      <h3><strong>Category:</strong>{{ form.category }}</h3>
+    </div>
+     <div>
+      <h3><strong>Type:</strong>{{ form.type }}</h3>
+    </div>
+     <div>
+      <h3><strong>Subject:</strong>{{ form.subject }}</h3>
+    </div>
+     <div>
+      <h3><strong>Complain:</strong>{{ form.complain }}</h3>
+    </div>
+    <div>
+      <h3><strong>Date:</strong>{{ form.created_date }}</h3>
+    </div>
+    <div>
+      <h3><strong>Time:</strong>{{ form.created_time }}</h3>
+    </div>
+ </div>
+ {% qr_from_text qr_content size="m" image_format="png" error_correction="L" %}
